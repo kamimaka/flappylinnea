@@ -16,11 +16,15 @@ public class Game extends JPanel implements Runnable,KeyListener{
 	private Pictures bi;
 	private Sound linneaay;
 	private int score;
+	private boolean start;
+	private boolean lost;
 	private Pictures linneaa;
 	private int collision;
 	private double dx;
 	private ArrayList <Box> obs;
 	private boolean win;
+	public boolean reset;
+	private boolean music;
 	
 	public Game() {
 		back=null;
@@ -34,7 +38,8 @@ public class Game extends JPanel implements Runnable,KeyListener{
 		r5=new Box(390,400);
 		r6=new Box(530,400);
 		r7=new Box(670,400);
-		
+		reset=true;
+		music=true;
 		Sound p=new Sound();
 		p.playmusic("mario.wav");
 		
@@ -47,13 +52,14 @@ public class Game extends JPanel implements Runnable,KeyListener{
 		
 		linneaa=new Pictures("linneaa.png",10,300,1,1,50,50,true,false);
 		collision=1;
+		start=false;
 			}
 	
 	private ArrayList<Box> setObs() {
 		
 		ArrayList <Box> temp = new ArrayList <Box> ();
-		temp.add(new Box(90, 0, 70, 310));
-		temp.add(new Box(90,430, 70, 310));
+		temp.add(new Box(100, 0, 70, 310));
+		temp.add(new Box(100,430, 70, 310));
 		
 		temp.add(new Box(240, 0, 70,270));
 		temp.add(new Box(240, 400, 70, 400));
@@ -91,6 +97,10 @@ public void paint (Graphics g)
 				
 
 			Graphics g2d = back.createGraphics();
+			
+			if (reset) {
+				reset();
+			}
 				
 			g2d.clearRect(0, 0, getSize().width, getSize().height);
 			g2d.drawImage(new ImageIcon(bi.getPic()).getImage(),bi.getX(),bi.getY(), bi.getwidth(), bi.getheight(), this);
@@ -101,6 +111,8 @@ public void paint (Graphics g)
 				if(win) {
 					g2d.setFont(new Font("chiller", Font.BOLD,100));
 					g2d.drawString("Game Over", 220, 300);
+					music=false;
+					reset=false;
 }
 			else {
 				move();
@@ -136,7 +148,8 @@ public void paint (Graphics g)
 		if(linneaa.Collision(obs.get(i))) {
 			obs.clear();
 			win=true;
-		
+			music=false;
+			reset=false;
 	}
 }
 	dx+=.6;
@@ -146,7 +159,31 @@ twoDgraph.drawImage (back, 0, 0, null);
 }
 
 public void move() {
-	linneaa.move((int)dx);
+    if (start) {
+       // linneaa.move((int) dx);
+    	linneaa.setX(linneaa.getX()+linneaa.getDx());
+    	linneaa.setY(linneaa.getY()+linneaa.getDy());
+    }
+}
+
+
+
+public void reset() {
+	start=false;
+	music=true;
+	key=-1;
+	reset=false;
+	win=false;
+	linneaa.setX(10);
+	linneaa.setY(300);
+	score=0;
+	obs = setObs();
+	r3= new Box();
+	r4=new Box(240,380);
+	r5=new Box(390,400);
+	r6=new Box(530,400);
+	r7=new Box(670,400);
+	
 }
 	public void keyTyped(KeyEvent e){
 		
@@ -158,8 +195,13 @@ public void move() {
 	
 		if(key==32) {
 			linneaa.setDy(-1);
-		}			
-
+		}		
+		if(key==16) {
+			reset=true;
+		}
+		if(key==32) {
+			start=true;
+		}
 }
 	public void keyReleased(KeyEvent e){
 		key=e.getKeyCode();
