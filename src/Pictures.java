@@ -84,6 +84,58 @@ public class Pictures {
 		return pic;
 	}
 	
+	public int getWidth() {
+		return width;
+	}
+
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
+	public boolean isMovedn() {
+		return movedn;
+	}
+
+	public void setMovedn(boolean movedn) {
+		this.movedn = movedn;
+	}
+
+	public boolean isMovert() {
+		return movert;
+	}
+
+	public void setMovert(boolean movert) {
+		this.movert = movert;
+	}
+
+	public int getDx() {
+		return dx;
+	}
+
+	public int getDy() {
+		return dy;
+	}
+
+	public void setPic(String pic) {
+		this.pic = pic;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
+
 	public int getX() {
 		return x;	
 	}
