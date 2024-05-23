@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class Game extends JPanel implements Runnable,KeyListener{
@@ -20,6 +21,8 @@ public class Game extends JPanel implements Runnable,KeyListener{
 	private boolean lost;
 	private Pictures linneaa;
 	private int collision;
+	private double time;
+	private double ctime;
 	private double dx;
 	private ArrayList <Box> obs;
 	private boolean win;
@@ -30,9 +33,11 @@ public class Game extends JPanel implements Runnable,KeyListener{
 		back=null;
 		new Thread(this).start();
 		this.addKeyListener(this);
-		bi=new Pictures("fpb.png",0,0,800,600);
+		bi=new Pictures("linnea.png",0,0,800,600);
 		score=0;
 		key=-1;
+		time=System.currentTimeMillis();
+		ctime=0;
 		r3= new Box();
 		r4=new Box(240,380);
 		r5=new Box(390,400);
@@ -58,20 +63,20 @@ public class Game extends JPanel implements Runnable,KeyListener{
 	private ArrayList<Box> setObs() {
 		
 		ArrayList <Box> temp = new ArrayList <Box> ();
-		temp.add(new Box(100, 0, 70, 310));
-		temp.add(new Box(100,430, 70, 310));
+		temp.add(new Box(150, 0, 60, 310));
+		temp.add(new Box(150,470, 60, 310));
 		
-		temp.add(new Box(240, 0, 70,270));
-		temp.add(new Box(240, 400, 70, 400));
+		temp.add(new Box(270, 0, 60,270));
+		temp.add(new Box(270, 410, 60, 400));	
 		
-		temp.add(new Box(390,0,70,320));
-		temp.add(new Box(390,440,70,160));
+		temp.add(new Box(390,00,60,340));
+		temp.add(new Box(390,460,60,160));	
 		
-		temp.add(new Box(530,0,70,380));
-		temp.add(new Box(530,500,70,290));
+		temp.add(new Box(510,0,60,380));
+		temp.add(new Box(510,495,60,290));
 		
-		temp.add(new Box(670,0,70,360));
-		temp.add(new Box(670,460,70,170));
+		temp.add(new Box(630,0,60,360));
+		temp.add(new Box(630,440,60,170));
 	      
 		return temp;
 	}
@@ -106,16 +111,20 @@ public void paint (Graphics g)
 			g2d.drawImage(new ImageIcon(bi.getPic()).getImage(),bi.getX(),bi.getY(), bi.getwidth(), bi.getheight(), this);
 			g2d.setColor(Color.orange );
 			g2d.setFont(new Font("chiller",Font.BOLD,25));
+			
+			g2d.drawString(new DecimalFormat("#0.00").format(ctime), 15, 55);
 			g2d.drawString("SCORE " +score,0,30);
 
 				if(win) {
-					g2d.setFont(new Font("chiller", Font.BOLD,100));
-					g2d.drawString("Game Over", 220, 300);
+					g2d.setFont(new Font("chiller", Font.BOLD,90));
+					g2d.drawString("Game Over", 210, 300);
+					g2d.drawString("Press Shift to Resart",100,380);
 					music=false;
 					reset=false;
 }
 			else {
 				move();
+				ctime=(System.currentTimeMillis()-time)/1000;
         	}
 							
 				
@@ -165,9 +174,6 @@ public void move() {
     	linneaa.setY(linneaa.getY()+linneaa.getDy());
     }
 }
-
-
-
 public void reset() {
 	start=false;
 	music=true;
@@ -177,6 +183,7 @@ public void reset() {
 	linneaa.setX(10);
 	linneaa.setY(300);
 	score=0;
+	 time = System.currentTimeMillis();
 	obs = setObs();
 	r3= new Box();
 	r4=new Box(240,380);
@@ -186,9 +193,7 @@ public void reset() {
 	
 }
 	public void keyTyped(KeyEvent e){
-		
-}
-
+		}
 		public void keyPressed(KeyEvent e){
 			key=e.getKeyCode();
 				System.out.println(key);
@@ -217,7 +222,9 @@ public void reset() {
 		if(key==32){
 			linneaa.setDy(1);
 		}
+		
+		
+		{}}}
 
-{
-}
-}}
+
+
