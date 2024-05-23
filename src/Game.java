@@ -126,8 +126,9 @@ public void paint (Graphics g)
 				move();
 				ctime=(System.currentTimeMillis()-time)/1000;
         	}
-							
+					
 				
+						
 	if(linneaa.Collision(r3)&&collision==1) {
 	collision++;
 		score+=10;}
@@ -207,7 +208,9 @@ public void reset() {
 		if(key==32) {
 			start=true;
 		}
-}
+		if(key==10) {
+			score=100;
+			}}
 	public void keyReleased(KeyEvent e){
 		key=e.getKeyCode();
 		if(key==39) {
@@ -224,7 +227,12 @@ public void reset() {
 		}
 		
 		
-		{}}}
+		{
+			
+		}
+		
+		
+		}}
 
 
 
